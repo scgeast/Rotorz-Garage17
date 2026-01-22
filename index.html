@@ -356,6 +356,13 @@
             align-items: center;
             justify-content: center;
             font-size: 1.2rem;
+            cursor: pointer;
+            transition: all 0.3s;
+        }
+        
+        .mobile-logo-icon:hover {
+            background: linear-gradient(135deg, var(--primary-dark), #3b82f6);
+            transform: scale(1.05);
         }
         
         .user-avatar-small {
@@ -407,42 +414,6 @@
             display: block;
         }
         
-        /* Desktop Toggle Button */
-        .sidebar-toggle {
-            position: absolute; 
-            right: -15px; /* Lebih dekat ke sidebar */
-            top: 50%;
-            transform: translateY(-50%);
-            background: none;
-            color: var(--dark-light); /* Warna lebih subtle */
-            border: none; 
-            border-radius: 50%; 
-            width: 36px; /* Lebih kecil */
-            height: 36px;
-            cursor: pointer; 
-            z-index: 50;
-            box-shadow: none;
-            transition: all 0.3s;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            font-size: 1.1rem;
-            opacity: 0.7; /* Sedikit transparan */
-        }
-        
-        .sidebar-toggle:hover { 
-            background: none;
-            opacity: 1; /* Full opacity saat hover */
-            color: var(--primary); /* Warna primary saat hover */
-            transform: scale(1.2) translateY(-50%);
-        }
-        
-        /* Efek khusus untuk ikon list */
-        .sidebar-toggle i {
-            transition: all 0.3s ease;
-            text-shadow: 0 1px 2px rgba(0,0,0,0.1); /* Shadow halus pada teks */
-        }
-        
         .sidebar-header { 
             padding: 1rem; 
             display: flex; 
@@ -451,9 +422,9 @@
             border-bottom: 1px solid rgba(255, 255, 255, 0.1); 
             background: rgba(0, 0, 0, 0.2);
         }
-        
+                
         .sidebar-logo { 
-            background: linear-gradient(135deg, var(--primary), #60a5fa); 
+            background: linear-gradient(135deg, var(--primary), #60a5fa); /* Warna asli */
             color: white; 
             width: 40px; 
             height: 40px; 
@@ -463,6 +434,20 @@
             justify-content: center; 
             font-size: 1.5rem;
             font-weight: bold;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+        
+        .sidebar-logo:hover { 
+            background: linear-gradient(135deg, var(--primary-dark), #3b82f6); /* Warna lebih gelap saat hover */
+            transform: scale(1.05);
+            box-shadow: 0 4px 12px rgba(59, 130, 246, 0.3);
+        }
+        
+        /* Efek saat sidebar collapsed - tetap warna asli */
+        .sidebar.collapsed .sidebar-logo {
+            border-radius: 50%;
+            background: linear-gradient(135deg, var(--primary), var(--secondary)); /* Tetap warna asli */
         }
         
         .sidebar-title { 
@@ -1169,10 +1154,6 @@
                 margin-left: 70px;
             }
             
-            .sidebar-toggle {
-                display: flex;
-            }
-            
             .close-sidebar { display: none; }
             
             #app-container { 
@@ -1235,10 +1216,6 @@
             .gear-animation {
                 width: 120px;
                 height: 120px;
-            }
-            
-            .sidebar-toggle {
-                display: none;
             }
             
             .motor-silhouette { display: none; }
@@ -1317,7 +1294,7 @@
             </button>
             
             <div class="login-copyright text-xs mt-2">
-                © Powered by Kim Jong Un. All rights reserved 2026
+                © 2024 Rotorz Garage 17. All rights reserved
             </div>
         </div>
     </div>
@@ -1347,7 +1324,7 @@
                     <i class="fas fa-bars"></i>
                 </button>
                 <div class="mobile-logo">
-                    <div class="mobile-logo-icon">
+                    <div class="mobile-logo-icon" onclick="toggleSidebarDesktop()">
                         <i class="fas fa-motorcycle"></i>
                     </div>
                     <span class="sidebar-title">ROTORZ GARAGE</span>
@@ -1362,7 +1339,9 @@
         <!-- Sidebar -->
         <div class="sidebar" id="sidebar">
             <div class="sidebar-header">
-                <div class="sidebar-logo"><i class="fas fa-motorcycle"></i></div>
+                <div class="sidebar-logo clickable" onclick="toggleSidebarDesktop()" title="Toggle Sidebar">
+                    <i class="fas fa-motorcycle" id="sidebar-toggle-icon"></i>
+                </div>
                 <div class="sidebar-title">ROTORZ GARAGE 17</div>
                 <button class="close-sidebar" onclick="toggleSidebar()">
                     <i class="fas fa-times"></i>
@@ -1388,11 +1367,6 @@
                 <span class="menu-icon"><i class="fas fa-sign-out-alt"></i></span>
                 <span class="menu-label">Log Out</span>
             </div>
-            
-            <!-- Desktop Toggle Button -->
-            <button class="sidebar-toggle" onclick="toggleSidebarDesktop()" title="Toggle Sidebar">
-                <i class="fas fa-list" id="sidebar-toggle-icon"></i>
-            </button>
         </div>
 
         <!-- Main Content -->
@@ -2190,21 +2164,18 @@ function toggleSidebarDesktop() {
     const toggleIcon = document.getElementById('sidebar-toggle-icon');
     
     if (window.innerWidth >= 1024) {
-        // Desktop mode - collapse/expand
         sidebar.classList.toggle('collapsed');
         
-        // Change icon based on state
+        // Optional: Ubah ikon berdasarkan state
         if (sidebar.classList.contains('collapsed')) {
-            // Saat sidebar collapsed (tertutup), tampilkan icon list
-            toggleIcon.className = 'fas fa-list';
+            // Saat collapsed, ubah ikon jadi list atau burger
+            toggleIcon.className = 'fas fa-bars';
         } else {
-            // Saat sidebar expanded (terbuka), tampilkan icon list (tetap sama atau bisa ganti)
-            toggleIcon.className = 'fas fa-list';
-            // Atau jika ingin icon berbeda saat terbuka, misalnya:
-            // toggleIcon.className = 'fas fa-times';
+            // Saat expanded, kembalikan ke motor
+            toggleIcon.className = 'fas fa-motorcycle';
         }
     } else {
-        // Tablet/mobile - use slide toggle
+        // Untuk mobile, tetap gunakan toggle biasa
         toggleSidebar();
     }
 }
