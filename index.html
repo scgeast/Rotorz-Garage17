@@ -1381,7 +1381,7 @@
             
             <!-- Desktop Toggle Button -->
             <button class="sidebar-toggle" onclick="toggleSidebarDesktop()" title="Toggle Sidebar">
-                <i class="fas fa-chevron-left" id="sidebar-toggle-icon"></i>
+                <i class="fas fa-list" id="sidebar-toggle-icon"></i>
             </button>
         </div>
 
@@ -2185,9 +2185,13 @@ function toggleSidebarDesktop() {
         
         // Change icon based on state
         if (sidebar.classList.contains('collapsed')) {
-            toggleIcon.className = 'fas fa-chevron-right';
+            // Saat sidebar collapsed (tertutup), tampilkan icon list
+            toggleIcon.className = 'fas fa-list';
         } else {
-            toggleIcon.className = 'fas fa-chevron-left';
+            // Saat sidebar expanded (terbuka), tampilkan icon list (tetap sama atau bisa ganti)
+            toggleIcon.className = 'fas fa-list';
+            // Atau jika ingin icon berbeda saat terbuka, misalnya:
+            // toggleIcon.className = 'fas fa-times';
         }
     } else {
         // Tablet/mobile - use slide toggle
