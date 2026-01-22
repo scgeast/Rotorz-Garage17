@@ -1294,7 +1294,7 @@
             </button>
             
             <div class="login-copyright text-xs mt-2">
-                © 2024 Rotorz Garage 17. All rights reserved
+                © Powered By Kim Jong Un. All rights reserved 2026
             </div>
         </div>
     </div>
@@ -1344,7 +1344,7 @@
                 </div>
                 <div class="sidebar-title">ROTORZ GARAGE 17</div>
                 <button class="close-sidebar" onclick="toggleSidebar()">
-                    <i class="fas fa-motorcycle"></i>
+                    <i class="fas fa-times"></i>
                 </button>
             </div>
             
@@ -2166,14 +2166,9 @@ function toggleSidebarDesktop() {
     if (window.innerWidth >= 1024) {
         sidebar.classList.toggle('collapsed');
         
-        // Optional: Ubah ikon berdasarkan state
-        if (sidebar.classList.contains('collapsed')) {
-            // Saat collapsed, ubah ikon jadi list atau burger
-            toggleIcon.className = 'fas fa-bars';
-        } else {
-            // Saat expanded, kembalikan ke motor
-            toggleIcon.className = 'fas fa-motorcycle';
-        }
+        // ICON TETAP SAMA - TIDAK BERUBAH
+        // Biarkan ikon tetap fa-motorcycle baik saat collapsed maupun expanded
+        toggleIcon.className = 'fas fa-motorcycle';
     } else {
         // Untuk mobile, tetap gunakan toggle biasa
         toggleSidebar();
